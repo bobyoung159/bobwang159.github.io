@@ -61,6 +61,197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Set" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/01/Set/" class="article-date">
+  <time datetime="2020-04-01T06:36:05.000Z" itemprop="datePublished">2020-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/01/Set/">Set集合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>Set集合与Collection基本相同，只不过Set不允许出现重复元素。
+
+1.HashSet类
+HashSet类是Set接口的典型实现，在使用他进行数据储存时，会通过调用该对象的hashCode（）方法，equals（）方法来判断是否与集合中元素重复。
+
+示例代码：
+    import java.util.HashSet;
+    import java.util.Iterator;
+
+    class R{
+        int count;
+        public R(int count){
+            this.count=count;
+        }
+        public String toString(){
+            return &quot;r[count:&quot;+count+&quot;]&quot;;    //改写toString方法，是对象按规定格式输出。
+        }
+        public boolean equals(Object obj){
+            if(this==obj){        //对象相同的情况
+                return true;
+            }
+            if(obj!=null&amp;&amp;obj.getClass()==R.class){ //非空且类型一致
+                R r=(R)obj;
+                return this.count==r.count;
+            }
+            return false;
+
+        }
+        public int hashCode(){
+            return this.count; //将count作为hashcode检测值，正常情况下有标准的方法
+        }
+    }
+    public class HarshsetTest {
+        public static void main(String []args){
+            HashSet hs=new HashSet();
+            hs.add(new R(5));
+            hs.add(new R(-3));
+            hs.add(new R(9));
+            hs.add(new R(-2));
+            System.out.println(hs);
+            Iterator it=hs.iterator();
+        }
+    }
+
+2.LinkedHashSet类
+他是HashSet类的子类，在其基础上使用链表维护元素的次序，会按照元素添加的顺序来访问集合中的元素。
+
+示例代码：
+    import java.util.LinkedHashSet;
+
+    public class LinkedHashSetTest {
+        public static void main(String[] args){
+            LinkedHashSet books =new LinkedHashSet();
+            books.add(&quot;dsd&quot;);
+            books.add(&quot;sdsf&quot;);
+            System.out.println(books);
+            books.remove(&quot;dsd&quot;);
+            books.add(&quot;dsd&quot;);
+            System.out.println(books);//元素顺序总是于添加顺序相同
+        }
+    }
+
+3.TreeSet类
+    该类是SortedSet接口的实现类，保证集合元素处于排序状态。    
+    在原有基础上提供了如下方法：
+        first():返回集合第一个函数。
+        last():返回集合最后一个函数。
+        higher(Object e)：返回大于指定元素的最小元素.
+        lower(Object e):返回小于指定元素的最大元素。
+        headSet(Object e):返回集合中小于e的子集.
+        tailSet(Object e):返回集合中大于等于e的子集.
+
+示例代码：
+    import java.util.TreeSet;
+
+    public class TreeSetTest {
+        public static void main(String[] args){
+            TreeSet nums= new TreeSet();//根据数值大小排序
+            nums.add(5);
+            nums.add(2);
+            nums.add(10);
+            nums.add(-9);
+            System.out.println(nums);
+            System.out.println(nums.first());
+            System.out.println(nums.last());
+            System.out.println(nums.headSet(4));//排在四前面的
+            System.out.println(nums.tailSet(5));//排在五后面的
+            System.out.println(nums.subSet(-3,4));//-3和4之间的
+        }
+    }
+
+同时，TreeSet支持两种排序方式：自然排序和定制排序。
+
+（1）自然排序
+    调用Comparable接口的compareTo(Object e)方法，比较大小关系，对集合元素升序排序，同时判断元素相等唯一标准
+也是compareTo方法是否返回0（但也要保证equals（）返回结果一致）。
+    因此，在将对象存入TreeSet之前，该对象的类必须先实现Comparable接口，显然，同类才能比较大小。
+
+示例代码：
+    import java.util.TreeSet;
+
+    class Z implements Comparable{
+        int age;
+        public Z(int age){
+            this.age=age;
+        }
+        public boolean equals(Object obj){
+            return true;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            return 1;
+        }
+    }
+    public class TreeSetTest2 {
+        public static void main(String[] args){
+            TreeSet set= new TreeSet();
+            Z z1=new Z(6);
+            set.add(z1);
+            System.out.println(set.add(z1));
+            System.out.println(set);
+            ((Z)(set.first())).age=9;
+            System.out.println(((Z)(set.last())).age);
+        }
+    }
+
+（2）定制排序
+    定制排序通过使用Comparator接口中的int compare（o1,o2）方法，该方法返回正整数，代表o1&gt;o2,返回0，代表相等，返回负数，代表o1小于o2。
+    Comparator为函数式接口，可以直接使用lambda表达式。
+
+示例代码：
+    import java.util.TreeSet;
+
+    class M{
+        int age;
+        public M(int age){
+            this.age=age;
+        }
+        public String toString(){
+            return &quot;M[age:&quot;+age+&quot;]&quot;;
+        }
+    }
+    public class TreeSetTest3 {
+        public static void main(String[] args){
+            TreeSet ts =new TreeSet((o1,o2)-&gt;{
+                M m1=(M)o1;
+                M m2=(M)o2;
+                return m1.age&gt;m2.age?-1:m1.age&lt;m2.age?1:0;
+            });
+            ts.add(new M(5));
+            ts.add(new M(-3));
+            ts.add(new M(9));
+            System.out.println(ts);
+        }
+    }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/01/Set/" data-id="ck8h0bpbq0002xkvkffmr5h3s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Collection" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/03/28/Collection/" class="article-date">
@@ -189,7 +380,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8g1nbmu0000gwvk2strdk69" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8h0bpbs0003xkvkhihy99ss" class="article-share-link">Share</a>
       
       
     </footer>
@@ -228,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8g1nbnc0002gwvk2d204531" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8h0bpbj0000xkvkax0eeaj9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -277,7 +468,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8g1nbmy0001gwvk7nhaan35" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8h0bpbo0001xkvkf8aj0gbe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -305,7 +496,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
     </div>
   </div>
 
@@ -316,6 +507,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/04/01/Set/">Set集合</a>
+          </li>
         
           <li>
             <a href="/2020/03/28/Collection/">java集合类（一）Collection相关操作</a>
