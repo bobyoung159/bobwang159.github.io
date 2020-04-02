@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>java集合类（三）List类和Queue类相关操作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object e):位">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java集合类（三）List类和Queue类相关操作">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;02&#x2F;List&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object e):位">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-02T08:23:35.971Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-List" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/02/List/" class="article-date">
+  <time datetime="2020-04-02T04:21:50.000Z" itemprop="datePublished">2020-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java集合类（三）List类和Queue类相关操作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
+    1.方法
+        void add(int index,Object e):添加元素到index处。
+        Object get(int index):返回index处的元素。
+        int indexOf(Object e):位置索引。
+        Object remove（int index）:删除并返回index处的元素。
+        Object set(int index,Object e):替换，返回被替换对象。
+
+示例代码：
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ListTest {
+        public static void main(String[] args){
+            List books = new ArrayList();
+            books.add(new String(&quot;轻量级java ee企业实战&quot;));
+            books.add(new String(&quot;疯狂java讲义&quot;));
+            books.add(new String(&quot;疯狂安卓讲义&quot;));
+            System.out.println(books);
+            books.add(1,new String(&quot;ajax讲义&quot;));
+            for(int i=0;i&lt;books.size();i++){
+                System.out.println(books.get(i));
+            }
+            books.remove(2);
+            System.out.println(books);
+            books.set(2,&quot;疯狂java讲义&quot;);
+            System.out.println(books);
+        }
+    }
+
+    List判断对象相等只要通过equals()方法进行比较即可。
+    java为List增加了sort()方法和replaceAll()方法，sort的参数是Comparator对象，可以用lambda表达式，而replaceAll()参数是UnaryOperator对象,而
+UnaryOperator同样为函数式接口，所以也可以用lambda表达式。
+
+示例代码：
+    import java.util.ArrayList;
+    import java.util.List;
+
+    class Atest{
+        public boolean equals(Object obj){
+            return true;
+        }
+    }
+    public class ListTest2 {
+        public static void main(String[] args){
+            List books = new ArrayList();
+            books.add(new String(&quot;轻量级java ee企业实战&quot;));
+            books.add(new String(&quot;疯狂java讲义&quot;));
+            books.add(new String(&quot;疯狂安卓讲义&quot;));
+            books.add(1,new String(&quot;ajax讲义&quot;));
+            books.sort((o1,o2)-&gt;((String)o1).length()-((String)o2).length());//代码块中只有一条语句，不用return关键词
+            System.out.println(books);
+            books.replaceAll(ele-&gt;((String)ele).length());
+            System.out.println(books);
+            books.remove(new Atest());//list判断两对象相等只比较equals函数，
+            System.out.println(books);//调用atest类的equals函数总是返回true,删除时list将元素依次进行比较.
+
+        }
+    }
+
+Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
+    1.方法
+    add（Object e）：将指定元素加入队列尾部。
+    element（）：获得头部元素。
+    peek():获取头部元素。
+    pool（）：获取头部元素并删除。
+    2.标准实现类-PriorityQueue
+        该类为较标准的队列实现类，但是保存顺序不是按加入队列的顺序，而是按队列元素大小排序，peek（）或pool（）取出的是最小的元素。
+
+    示例代码：
+        import java.util.PriorityQueue;
+
+        public class PriorityQueueTest {
+            public static void main(String[] args){
+                PriorityQueue pq =new PriorityQueue();
+                pq.offer(-6);
+                pq.offer(-3);
+                pq.offer(7);
+                pq.offer(3);
+                System.out.println(pq);
+                System.out.println(pq.poll());
+            }
+        }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8ihswwk00006svk0ka6g7dl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/01/Set/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">java集合类（二）Set相关操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/28/Collection/">java集合类（一）Collection相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/20/first/">first</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/20/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

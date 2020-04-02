@@ -61,6 +61,124 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-List" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/02/List/" class="article-date">
+  <time datetime="2020-04-02T04:21:50.000Z" itemprop="datePublished">2020-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
+    1.方法
+        void add(int index,Object e):添加元素到index处。
+        Object get(int index):返回index处的元素。
+        int indexOf(Object e):位置索引。
+        Object remove（int index）:删除并返回index处的元素。
+        Object set(int index,Object e):替换，返回被替换对象。
+
+示例代码：
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ListTest {
+        public static void main(String[] args){
+            List books = new ArrayList();
+            books.add(new String(&quot;轻量级java ee企业实战&quot;));
+            books.add(new String(&quot;疯狂java讲义&quot;));
+            books.add(new String(&quot;疯狂安卓讲义&quot;));
+            System.out.println(books);
+            books.add(1,new String(&quot;ajax讲义&quot;));
+            for(int i=0;i&lt;books.size();i++){
+                System.out.println(books.get(i));
+            }
+            books.remove(2);
+            System.out.println(books);
+            books.set(2,&quot;疯狂java讲义&quot;);
+            System.out.println(books);
+        }
+    }
+
+    List判断对象相等只要通过equals()方法进行比较即可。
+    java为List增加了sort()方法和replaceAll()方法，sort的参数是Comparator对象，可以用lambda表达式，而replaceAll()参数是UnaryOperator对象,而
+UnaryOperator同样为函数式接口，所以也可以用lambda表达式。
+
+示例代码：
+    import java.util.ArrayList;
+    import java.util.List;
+
+    class Atest{
+        public boolean equals(Object obj){
+            return true;
+        }
+    }
+    public class ListTest2 {
+        public static void main(String[] args){
+            List books = new ArrayList();
+            books.add(new String(&quot;轻量级java ee企业实战&quot;));
+            books.add(new String(&quot;疯狂java讲义&quot;));
+            books.add(new String(&quot;疯狂安卓讲义&quot;));
+            books.add(1,new String(&quot;ajax讲义&quot;));
+            books.sort((o1,o2)-&gt;((String)o1).length()-((String)o2).length());//代码块中只有一条语句，不用return关键词
+            System.out.println(books);
+            books.replaceAll(ele-&gt;((String)ele).length());
+            System.out.println(books);
+            books.remove(new Atest());//list判断两对象相等只比较equals函数，
+            System.out.println(books);//调用atest类的equals函数总是返回true,删除时list将元素依次进行比较.
+
+        }
+    }
+
+Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
+    1.方法
+    add（Object e）：将指定元素加入队列尾部。
+    element（）：获得头部元素。
+    peek():获取头部元素。
+    pool（）：获取头部元素并删除。
+    2.标准实现类-PriorityQueue
+        该类为较标准的队列实现类，但是保存顺序不是按加入队列的顺序，而是按队列元素大小排序，peek（）或pool（）取出的是最小的元素。
+
+    示例代码：
+        import java.util.PriorityQueue;
+
+        public class PriorityQueueTest {
+            public static void main(String[] args){
+                PriorityQueue pq =new PriorityQueue();
+                pq.offer(-6);
+                pq.offer(-3);
+                pq.offer(7);
+                pq.offer(3);
+                System.out.println(pq);
+                System.out.println(pq.poll());
+            }
+        }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8ihswwk00006svk0ka6g7dl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Set" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/01/Set/" class="article-date">
@@ -75,7 +193,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/01/Set/">Set集合</a>
+      <a class="article-title" href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
     </h1>
   
 
@@ -242,7 +360,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/01/Set/" data-id="ck8h0bpbq0002xkvkffmr5h3s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/01/Set/" data-id="ck8ihswwq00026svkh76q27si" class="article-share-link">Share</a>
       
       
     </footer>
@@ -274,8 +392,15 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>（一）Collection<br>    是java集合框架的根接口，同时也是set,queue和list的父接口。<br>    1.方法<br>        boolean add(object obj):添加一个元素。<br>        void clear（）：清空集合。<br>        boolean contains(object obj):是否包含指定元素。<br>        boolean isEmpty():集合是否为空。<br>        boolean remove(object obj):移出指定元素。</p>
-<pre><code>下列程序将展示如何通过上述方法操作集合元素。
+        <pre><code>Collection是java集合框架的根接口，同时也是set,queue和list的父接口。
+1.方法
+    boolean add(object obj):添加一个元素。
+    void clear（）：清空集合。
+    boolean contains(object obj):是否包含指定元素。
+    boolean isEmpty():集合是否为空。
+    boolean remove(object obj):移出指定元素。
+
+下列程序将展示如何通过上述方法操作集合元素。
     public class CollectionTest {
         public static void main(String [] args){
             Collection c = new ArrayList();
@@ -380,7 +505,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8h0bpbs0003xkvkhihy99ss" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8ihswwo00016svk9x3ihngn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -419,7 +544,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8h0bpbj0000xkvkax0eeaj9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8ihswx700046svk9c1z6uhe" class="article-share-link">Share</a>
       
       
     </footer>
@@ -468,7 +593,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8h0bpbo0001xkvkf8aj0gbe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8ihswwr00036svkgiyeb6lo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -509,7 +634,11 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       <ul>
         
           <li>
-            <a href="/2020/04/01/Set/">Set集合</a>
+            <a href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
           </li>
         
           <li>
