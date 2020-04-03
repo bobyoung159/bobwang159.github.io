@@ -61,6 +61,241 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Map" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/03/Map/" class="article-date">
+  <time datetime="2020-04-03T03:07:31.000Z" itemprop="datePublished">2020-04-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>    Map用于保存具有映射关系的数据，map中有两组值，一组保存key，key不允许重复；一组保存value，value可以重复。
+    Map集合与Set集合非常相似，事实上，java实现实现一个Map，再通过包装一个所有value都为null的Map实现的Set，因此Set下的常用实现类，Map
+基本都有对应，如HashMap，TreeMap,SortedMap等。
+1.方法
+    clear（）：清空所有键值对。
+    containsKey(Value):Map是否包含Key(Value).
+    get(key):返回key对应的value。
+    put(key,value):添加一个键值对。
+    remove（key）：删除key对应的键值对。
+    getKey（Value）：返回包含的key，value。
+
+示例代码：
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class MapTest {
+        public static void main(String[] args){
+            Map map = new HashMap();
+            map.put(&quot;疯狂java讲义&quot;,109);
+            map.put(&quot;疯狂ios讲义&quot;,10);
+            map.put(&quot;疯狂讲义&quot;,79);
+            System.out.println( map.put(&quot;疯狂ios讲义&quot;,79));
+            System.out.println(map);
+            System.out.println(&quot;是否包含iOS&quot;+map.containsKey(&quot;疯狂ios讲义&quot;));
+            System.out.println(&quot;是否录入价格&quot;+map.containsValue(99));
+            System.out.println(&quot;iOS的价格&quot;+map.get(&quot;疯狂ios讲义&quot;));
+            map.remove(&quot;疯狂讲义&quot;);
+            System.out.println(map);
+
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+2.HashMap，HashTable类
+    与HashSet相似，这两类判断key相等也是要hashcode值相等和equals（）返回true。
+
+示例代码：
+
+    import javax.management.ObjectName;
+    import java.util.Hashtable;
+
+    class A{
+        int count;
+        public A(int count){
+            this.count=count;
+        }
+        public boolean equals(Object obj){
+            if(this==obj){
+                return true;
+            }
+            if(obj!=null &amp;&amp; obj.getClass()==A.class){
+                A a=(A)obj;
+                return this.count==a.count;
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.count;
+        }
+    }
+    class B{
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
+    }
+    public class HashTableTest {
+        public static void main(String[] args){
+            Hashtable ht =new Hashtable();
+            ht.put(new A(6000),&quot;asd&quot;);
+            ht.put(new A(1234),&quot;qwer&quot;);
+            ht.put(new A(46675),new B());
+            System.out.println(ht);
+            System.out.println(ht.containsValue(&quot;cghhnnn&quot;));
+            System.out.println(ht.containsKey(new A(6000)));
+            ht.remove(new A(46675));
+            System.out.println(ht);
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+3.LinkedHashMap实现类
+    使用双向链表维护元素插入顺序，保证迭代顺序与插入顺序一致。
+
+示例代码：
+
+    import java.util.LinkedHashMap;
+
+    public class LinkedHashMapTest {
+        public static void main(String[] args){
+            LinkedHashMap score=new LinkedHashMap();
+            score.put(&quot;a&quot;,23);
+            score.put(&quot;b&quot;,24);
+            score.put(&quot;c&quot;,25);
+            score.forEach((key,value)-&gt;System.out.println(key+&quot;-&gt;&quot;+value));
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+4.TreeMap实现类
+    与TreeSet相似，也有自然排序和定制排序，提供方法顺序访问元素。
+
+    示例代码：
+
+    import java.util.TreeMap;
+
+    class R implements Comparable{
+        int count;
+        public R(int count){
+            this.count=count;
+        }
+        public String toString(){
+            return &quot;R[count:&quot;+count+&quot;]&quot;;//toString函数使在输出时，输出想要的名称
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(this==obj)
+                return true;
+            if(obj!=null&amp;&amp;obj.getClass()==R.class){
+                R r=(R)obj;
+                return r.count==this.count;
+            }
+            return false;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            R r=(R)o;
+            return count&gt;r.count?1:count&lt;r.count?-1:0;
+        }
+    }
+    public class TreeMapTest {
+        public static void main(String[] args){
+            TreeMap tm=new TreeMap();
+            tm.put(new R(3),&quot;ASD&quot;);
+            tm.put(new R(5),&quot;ASDfg&quot;);
+            tm.put(new R(4),&quot;ASDf&quot;);
+            System.out.println(tm);
+            System.out.println(tm.firstEntry());
+            System.out.println(tm.lastKey());
+            System.out.println(tm.higherKey(new R(2)));
+            System.out.println(tm.subMap(new R(-1),new R(4)));//返回范围内的子Map.
+        }
+    }    
+
+--------------------------------------------------------------------------------------------------------
+
+    5.Collections工具类
+    该类提供了大量方法对集合元素进行操作。
+
+示例代码:
+    import java.util.ArrayList;
+    import java.util.Collection;
+    import java.util.Collections;
+
+    public class SortTest {
+        public static void main(String[] args){
+            ArrayList nums=new ArrayList();
+            nums.add(2);
+            nums.add(-5);
+            nums.add(3);
+            nums.add(1);
+            System.out.println(nums);
+            Collections.reverse(nums);//翻转
+            System.out.println(nums);
+            Collections.sort(nums);//排序
+            System.out.println(nums);
+            Collections.shuffle(nums);//随机排序
+            System.out.println(nums);
+        }
+    }
+
+    同时还可以创建不可变集合，当然也可以使用java9新增的.of()方法来创建不可变集合
+
+示例代码：
+
+    import java.util.*;
+
+    public class UnmodifiableTest {
+        public static void main(String[] args){
+            List a = Collections.emptyList();//不可变
+            Set b = Collections.singleton(&quot;asd&quot;);//不可变
+            Map scores =new HashMap();
+            scores.put(&quot;qw&quot;,80);
+            scores.put(&quot;er&quot;,82);
+            Map c = Collections.unmodifiableMap(scores);//此时不能够做出任何改变了
+            Set set =Set.of(&quot;qw&quot;,&quot;sa&quot;,&quot;sd&quot;);
+            System.out.println(set);
+            List list = List.of(12,34,56,78);//使用of可以快速的创建多个元素的set，list，map不可变集
+            System.out.println(list);
+            Map map=Map.of(&quot;zx&quot;,23,&quot;as&quot;,34);
+        }
+    }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/03/Map/" data-id="ck8jo4bke0000jsvk670ng739" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-List" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/02/List/" class="article-date">
@@ -75,7 +310,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+      <a class="article-title" href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
     </h1>
   
 
@@ -83,7 +318,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
+        <pre><code>List集合
+    代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
     1.方法
         void add(int index,Object e):添加元素到index处。
         Object get(int index):返回index处的元素。
@@ -112,6 +348,8 @@
             System.out.println(books);
         }
     }
+
+--------------------------------------------------------------------------------------------------------
 
     List判断对象相等只要通过equals()方法进行比较即可。
     java为List增加了sort()方法和replaceAll()方法，sort的参数是Comparator对象，可以用lambda表达式，而replaceAll()参数是UnaryOperator对象,而
@@ -143,7 +381,10 @@ UnaryOperator同样为函数式接口，所以也可以用lambda表达式。
         }
     }
 
-Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
+--------------------------------------------------------------------------------------------------------
+
+Queue类
+    用于模拟队列这种数据结构，遵循先进先出的规则。
     1.方法
     add（Object e）：将指定元素加入队列尾部。
     element（）：获得头部元素。
@@ -169,7 +410,7 @@ Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8ihswwk00006svk0ka6g7dl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8jo4bkk0002jsvkfhx98o6j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -245,6 +486,8 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
         }
     }
 
+--------------------------------------------------------------------------------------------------------
+
 2.LinkedHashSet类
 他是HashSet类的子类，在其基础上使用链表维护元素的次序，会按照元素添加的顺序来访问集合中的元素。
 
@@ -262,6 +505,8 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
             System.out.println(books);//元素顺序总是于添加顺序相同
         }
     }
+
+--------------------------------------------------------------------------------------------------------
 
 3.TreeSet类
     该类是SortedSet接口的实现类，保证集合元素处于排序状态。    
@@ -360,7 +605,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/01/Set/" data-id="ck8ihswwq00026svkh76q27si" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/01/Set/" data-id="ck8jo4bkn0004jsvkaqvvaxxq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -419,6 +664,8 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
         }
     }
 
+--------------------------------------------------------------------------------------------------------
+
 2.遍历集合的两种方法
     （1）Lambda表达式遍历集合元素
         调用forEach（Consumer action）方法,其中Consumer是函数式接口，可以试用lambda表达式来遍历。
@@ -448,6 +695,8 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
             System.out.println(books);
         }
     }
+
+--------------------------------------------------------------------------------------------------------
 
 3.对集合的Stream操作
     通过对stream流式api的操作，可以简单的完成一些复杂的功能。
@@ -505,7 +754,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8ihswwo00016svk9x3ihngn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/28/Collection/" data-id="ck8jo4bkj0001jsvk7wz5ak9c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -544,7 +793,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8ihswx700046svk9c1z6uhe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/first/" data-id="ck8jo4bko0005jsvkgs8t392p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -593,7 +842,7 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8ihswwr00036svkgiyeb6lo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/20/hello-world/" data-id="ck8jo4bkl0003jsvk82d191g8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -634,7 +883,11 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
       <ul>
         
           <li>
-            <a href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+            <a href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
           </li>
         
           <li>
@@ -647,10 +900,6 @@ HashSet类是Set接口的典型实现，在使用他进行数据储存时，会�
         
           <li>
             <a href="/2019/10/20/first/">first</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/20/hello-world/">Hello World</a>
           </li>
         
       </ul>

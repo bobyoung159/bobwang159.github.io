@@ -5,16 +5,16 @@
   
 
   
-  <title>java集合类（三）List类和Queue类相关操作 | Hexo</title>
+  <title>java集合类（三）List集合和Queue集合相关操作 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object e):位">
+  <meta name="description" content="List集合     代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java集合类（三）List类和Queue类相关操作">
+<meta property="og:title" content="java集合类（三）List集合和Queue集合相关操作">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;02&#x2F;List&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object e):位">
+<meta property="og:description" content="List集合     代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。     1.方法         void add(int index,Object e):添加元素到index处。         Object get(int index):返回index处的元素。         int indexOf(Object">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-02T08:23:35.971Z">
+<meta property="og:updated_time" content="2020-04-03T04:07:19.214Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -76,7 +76,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      java集合类（三）List类和Queue类相关操作
+      java集合类（三）List集合和Queue集合相关操作
     </h1>
   
 
@@ -84,7 +84,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>List集合代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
+        <pre><code>List集合
+    代表一个元素有序，可重复的集合，集合中每个元素都有对应的顺序索引，因此允许出现重复元素，ArrayList是其典型实现。
     1.方法
         void add(int index,Object e):添加元素到index处。
         Object get(int index):返回index处的元素。
@@ -113,6 +114,8 @@
             System.out.println(books);
         }
     }
+
+--------------------------------------------------------------------------------------------------------
 
     List判断对象相等只要通过equals()方法进行比较即可。
     java为List增加了sort()方法和replaceAll()方法，sort的参数是Comparator对象，可以用lambda表达式，而replaceAll()参数是UnaryOperator对象,而
@@ -144,7 +147,10 @@ UnaryOperator同样为函数式接口，所以也可以用lambda表达式。
         }
     }
 
-Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
+--------------------------------------------------------------------------------------------------------
+
+Queue类
+    用于模拟队列这种数据结构，遵循先进先出的规则。
     1.方法
     add（Object e）：将指定元素加入队列尾部。
     element（）：获得头部元素。
@@ -170,7 +176,7 @@ Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8ihswwk00006svk0ka6g7dl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/02/List/" data-id="ck8jo4bkk0002jsvkfhx98o6j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -178,6 +184,15 @@ Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/04/03/Map/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          java集合类（四）Map集合和Collections类相关操作
+        
+      </div>
+    </a>
   
   
     <a href="/2020/04/01/Set/" id="article-nav-older" class="article-nav-link-wrap">
@@ -219,7 +234,11 @@ Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
       <ul>
         
           <li>
-            <a href="/2020/04/02/List/">java集合类（三）List类和Queue类相关操作</a>
+            <a href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
           </li>
         
           <li>
@@ -232,10 +251,6 @@ Queue类用于模拟队列这种数据结构，遵循先进先出的规则。
         
           <li>
             <a href="/2019/10/20/first/">first</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/20/hello-world/">Hello World</a>
           </li>
         
       </ul>

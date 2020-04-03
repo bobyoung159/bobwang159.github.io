@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>java集合类（四）Map集合和Collections类相关操作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Map用于保存具有映射关系的数据，map中有两组值，一组保存key，key不允许重复；一组保存value，value可以重复。     Map集合与Set集合非常相似，事实上，java实现实现一个Map，再通过包装一个所有value都为null的Map实现的Set，因此Set下的常用实现类，Map 基本都有对应，如HashMap，TreeMap,SortedMap等。 1.方法     c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java集合类（四）Map集合和Collections类相关操作">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;03&#x2F;Map&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Map用于保存具有映射关系的数据，map中有两组值，一组保存key，key不允许重复；一组保存value，value可以重复。     Map集合与Set集合非常相似，事实上，java实现实现一个Map，再通过包装一个所有value都为null的Map实现的Set，因此Set下的常用实现类，Map 基本都有对应，如HashMap，TreeMap,SortedMap等。 1.方法     c">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-03T04:07:49.474Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Map" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/03/Map/" class="article-date">
+  <time datetime="2020-04-03T03:07:31.000Z" itemprop="datePublished">2020-04-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      java集合类（四）Map集合和Collections类相关操作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>    Map用于保存具有映射关系的数据，map中有两组值，一组保存key，key不允许重复；一组保存value，value可以重复。
+    Map集合与Set集合非常相似，事实上，java实现实现一个Map，再通过包装一个所有value都为null的Map实现的Set，因此Set下的常用实现类，Map
+基本都有对应，如HashMap，TreeMap,SortedMap等。
+1.方法
+    clear（）：清空所有键值对。
+    containsKey(Value):Map是否包含Key(Value).
+    get(key):返回key对应的value。
+    put(key,value):添加一个键值对。
+    remove（key）：删除key对应的键值对。
+    getKey（Value）：返回包含的key，value。
+
+示例代码：
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class MapTest {
+        public static void main(String[] args){
+            Map map = new HashMap();
+            map.put(&quot;疯狂java讲义&quot;,109);
+            map.put(&quot;疯狂ios讲义&quot;,10);
+            map.put(&quot;疯狂讲义&quot;,79);
+            System.out.println( map.put(&quot;疯狂ios讲义&quot;,79));
+            System.out.println(map);
+            System.out.println(&quot;是否包含iOS&quot;+map.containsKey(&quot;疯狂ios讲义&quot;));
+            System.out.println(&quot;是否录入价格&quot;+map.containsValue(99));
+            System.out.println(&quot;iOS的价格&quot;+map.get(&quot;疯狂ios讲义&quot;));
+            map.remove(&quot;疯狂讲义&quot;);
+            System.out.println(map);
+
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+2.HashMap，HashTable类
+    与HashSet相似，这两类判断key相等也是要hashcode值相等和equals（）返回true。
+
+示例代码：
+
+    import javax.management.ObjectName;
+    import java.util.Hashtable;
+
+    class A{
+        int count;
+        public A(int count){
+            this.count=count;
+        }
+        public boolean equals(Object obj){
+            if(this==obj){
+                return true;
+            }
+            if(obj!=null &amp;&amp; obj.getClass()==A.class){
+                A a=(A)obj;
+                return this.count==a.count;
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.count;
+        }
+    }
+    class B{
+        @Override
+        public boolean equals(Object obj) {
+            return true;
+        }
+    }
+    public class HashTableTest {
+        public static void main(String[] args){
+            Hashtable ht =new Hashtable();
+            ht.put(new A(6000),&quot;asd&quot;);
+            ht.put(new A(1234),&quot;qwer&quot;);
+            ht.put(new A(46675),new B());
+            System.out.println(ht);
+            System.out.println(ht.containsValue(&quot;cghhnnn&quot;));
+            System.out.println(ht.containsKey(new A(6000)));
+            ht.remove(new A(46675));
+            System.out.println(ht);
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+3.LinkedHashMap实现类
+    使用双向链表维护元素插入顺序，保证迭代顺序与插入顺序一致。
+
+示例代码：
+
+    import java.util.LinkedHashMap;
+
+    public class LinkedHashMapTest {
+        public static void main(String[] args){
+            LinkedHashMap score=new LinkedHashMap();
+            score.put(&quot;a&quot;,23);
+            score.put(&quot;b&quot;,24);
+            score.put(&quot;c&quot;,25);
+            score.forEach((key,value)-&gt;System.out.println(key+&quot;-&gt;&quot;+value));
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------
+
+4.TreeMap实现类
+    与TreeSet相似，也有自然排序和定制排序，提供方法顺序访问元素。
+
+    示例代码：
+
+    import java.util.TreeMap;
+
+    class R implements Comparable{
+        int count;
+        public R(int count){
+            this.count=count;
+        }
+        public String toString(){
+            return &quot;R[count:&quot;+count+&quot;]&quot;;//toString函数使在输出时，输出想要的名称
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(this==obj)
+                return true;
+            if(obj!=null&amp;&amp;obj.getClass()==R.class){
+                R r=(R)obj;
+                return r.count==this.count;
+            }
+            return false;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            R r=(R)o;
+            return count&gt;r.count?1:count&lt;r.count?-1:0;
+        }
+    }
+    public class TreeMapTest {
+        public static void main(String[] args){
+            TreeMap tm=new TreeMap();
+            tm.put(new R(3),&quot;ASD&quot;);
+            tm.put(new R(5),&quot;ASDfg&quot;);
+            tm.put(new R(4),&quot;ASDf&quot;);
+            System.out.println(tm);
+            System.out.println(tm.firstEntry());
+            System.out.println(tm.lastKey());
+            System.out.println(tm.higherKey(new R(2)));
+            System.out.println(tm.subMap(new R(-1),new R(4)));//返回范围内的子Map.
+        }
+    }    
+
+--------------------------------------------------------------------------------------------------------
+
+    5.Collections工具类
+    该类提供了大量方法对集合元素进行操作。
+
+示例代码:
+    import java.util.ArrayList;
+    import java.util.Collection;
+    import java.util.Collections;
+
+    public class SortTest {
+        public static void main(String[] args){
+            ArrayList nums=new ArrayList();
+            nums.add(2);
+            nums.add(-5);
+            nums.add(3);
+            nums.add(1);
+            System.out.println(nums);
+            Collections.reverse(nums);//翻转
+            System.out.println(nums);
+            Collections.sort(nums);//排序
+            System.out.println(nums);
+            Collections.shuffle(nums);//随机排序
+            System.out.println(nums);
+        }
+    }
+
+    同时还可以创建不可变集合，当然也可以使用java9新增的.of()方法来创建不可变集合
+
+示例代码：
+
+    import java.util.*;
+
+    public class UnmodifiableTest {
+        public static void main(String[] args){
+            List a = Collections.emptyList();//不可变
+            Set b = Collections.singleton(&quot;asd&quot;);//不可变
+            Map scores =new HashMap();
+            scores.put(&quot;qw&quot;,80);
+            scores.put(&quot;er&quot;,82);
+            Map c = Collections.unmodifiableMap(scores);//此时不能够做出任何改变了
+            Set set =Set.of(&quot;qw&quot;,&quot;sa&quot;,&quot;sd&quot;);
+            System.out.println(set);
+            List list = List.of(12,34,56,78);//使用of可以快速的创建多个元素的set，list，map不可变集
+            System.out.println(list);
+            Map map=Map.of(&quot;zx&quot;,23,&quot;as&quot;,34);
+        }
+    }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/03/Map/" data-id="ck8jo4bke0000jsvk670ng739" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/02/List/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">java集合类（三）List集合和Queue集合相关操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/28/Collection/">java集合类（一）Collection相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/20/first/">first</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
