@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>泛型 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一.泛型的概念     在使用集合时，集合会忘记其中对象的类型，这导致可能将一个错误类型放入集合中导致出现异常的情况，同时在集合内 类型为Object,取出时要进行强制类型转换，会增加复杂度。     因此，需要使用泛型来解决这个问题，它相当于一个过滤器，指定一种类型，当试图加入对象时，会对错误类型报错，同 时，取出对象时不用进行强制类型转换。     反省不支持数组。  示例代码：     im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛型">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;08&#x2F;%E6%B3%9B%E5%9E%8B&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一.泛型的概念     在使用集合时，集合会忘记其中对象的类型，这导致可能将一个错误类型放入集合中导致出现异常的情况，同时在集合内 类型为Object,取出时要进行强制类型转换，会增加复杂度。     因此，需要使用泛型来解决这个问题，它相当于一个过滤器，指定一种类型，当试图加入对象时，会对错误类型报错，同 时，取出对象时不用进行强制类型转换。     反省不支持数组。  示例代码：     im">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-11T03:21:19.928Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-泛型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/08/%E6%B3%9B%E5%9E%8B/" class="article-date">
+  <time datetime="2020-04-08T11:51:41.000Z" itemprop="datePublished">2020-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      泛型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>一.泛型的概念
+    在使用集合时，集合会忘记其中对象的类型，这导致可能将一个错误类型放入集合中导致出现异常的情况，同时在集合内
+类型为Object,取出时要进行强制类型转换，会增加复杂度。
+    因此，需要使用泛型来解决这个问题，它相当于一个过滤器，指定一种类型，当试图加入对象时，会对错误类型报错，同
+时，取出对象时不用进行强制类型转换。
+    反省不支持数组。
+
+示例代码：
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class GeneraicList {
+        public static void main(String[] args){
+            List&lt;String&gt; strList = new ArrayList&lt;&gt;();//前面的&lt;&gt;加类型后，后面的&lt;&gt;就不需要加类型，这叫菱形语法，是java9的新特性。
+            strList.add(&quot;asd&quot;);
+            strList.add(&quot;qwerty&quot;);
+            //strList.add(5);加入int就会报错
+            strList.forEach(ele-&gt;System.out.println(ele.length()));
+        }
+    }
+
+二.深入泛型
+    1.    可以为任意的接口，类添加泛型声明，事实上可以把类（接口）的泛型近似视为类（接口）的子类（接口），当定义了String&lt;E&gt;时，实    
+    际上定义了无数子类，为E传入不同的类型实参，就会产生一个不同的子类，在定义了泛型形参后，就可以把形参当类来使用。
+
+示例代码：
+
+    public class Apple&lt;t&gt; {
+        private t info;
+        public Apple(t info){
+            this.info=info;
+        }
+        public void setInfo(t info){
+            this.info=info;
+        }
+        public t getInfo(){
+            return this.info;
+        }
+        public static void main(String[] args){
+            Apple&lt;String&gt; al= new Apple&lt;&gt;(&quot;苹果&quot;);
+            System.out.println(al.getInfo());
+            Apple&lt;Double&gt; a2 = new Apple&lt;&gt;(5.67);
+            System.out.println(a2.getInfo());
+        }
+    }
+
+    2.  而泛型类派生子类时也有一些要注意的点：
+        1.在继承时，代码不能包含泛型形参：
+        public class A extends Apples&lt;T&gt;{}，这种就是错的。
+
+        2.如果从Apple&lt;String&gt;继承子类，Apple类中使用T 类型的方法都会替换成String类型，子类在重写方法是要对应做出调整：
+
+        public class A1 extends Apple&lt;String&gt;{
+            public String getInfo(){
+                return &quot;子类&quot;+super.getInfo().toString();
+            }
+        }
+
+    3.  并不存在泛型类
+        系统并不会为泛型生成class文件，不管是形参被传入哪种类型的实参，都是被当做同一个类处理
+            List&lt;String&gt; l1=new ArrayList&lt;&gt;();
+            List&lt;String&gt; l2=new ArrayList&lt;&gt;();
+            System.out.println(l1.getClass()==l2.getClass());
+        同时，也不允许类型参数为静态对象，静态方法声明。
+
+三.类型通配符
+
+    如果在定义类，方法时有一个集合形参，其元素种类不确定，该怎么定义？
+
+    1.使用类型通配符&lt;?&gt;
+    通配符的元素类型可以匹配任何类型，比如List&lt;?&gt; c,带有通配符的List代表他是任何泛型List的父类。
+    需要注意的是，因为无法确定类型，所以不能向c中添加元素。
+
+    2.设置通配符的上限
+    定义三个类
+    public abstract class Shape {
+        public abstract void draw(Canvas c);
+    }
+
+    public class Circle extends Shape {
+        public void draw(Canvas c){
+            System.out.println(&quot;画在画布&quot;+c+&quot;上&quot;);
+        }
+    }
+
+    public class Rectangle extends Shape {
+        public void draw(Canvas c){
+            System.out.println(&quot;画矩形zai&quot;+c+&quot;上&quot;);
+        }
+    }
+        此时，虽然Circle是Shape的子类，List&lt;Circle&gt;并不算做List&lt;Shape&gt;的子类型，所以下面的drawAll方法，List&lt;Circle&gt;
+    不可以使用。
+    public class Canvas {
+        public void drawAll(List&lt;Shape&gt; shapes){
+            for(Shape s:shapes){
+                s.draw(this);
+            }
+        }
+    }
+    此时，就可以使用&lt;? extends Shape&gt;的形式，这里的?不表示父类，而是代表所有Shape的子类型，相当于设置了一个上限。
+    public class Canvas {
+        public void drawAll(List&lt;？extends Shape&gt; shapes){
+            for(Shape s:shapes){
+                s.draw(this);
+            }
+        }
+    }
+
+    3.设置通配符的下限
+        与上限对应，通过&lt;? super 类型&gt;可以设置下线，？代表有类型相同或类型父类。
+
+    4.设置泛型形参的上限
+        不只是通配符，还可以为泛型形参设置上限。
+
+        public class Apple&lt;t extends Number&gt; {
+            public static void main(String[] args){
+                Apple&lt;Integer&gt; al= new Apple&lt;&gt;();
+                Apple&lt;Double&gt; a2=new Apple&lt;&gt;();
+                Apple&lt;String&gt; a3=new Apple&lt;&gt;();//String不是Number子类，报错
+            }
+        }
+
+        在多个上限的时候，要先继承父类，在继承接口。
+
+四.泛型方法
+    1.定义泛型方法
+        即在定义方法时加上一个或多个泛型形参。
+        形如：修饰符 &lt;T,S&gt; 返回值类型 方法名（形参）{方法体}
+
+    示例代码：
+    public class GenericMethodTest {
+        static &lt;T&gt; void fromArrayToCollection(T[] a, Collection&lt;T&gt; c){
+            for(T o:a){
+                c.add(o);
+            }
+        }
+        public static void main(String[] args){
+            Object[] oa = new Object[100];
+            Collection&lt;Object&gt; co =new ArrayList&lt;&gt;();
+            fromArrayToCollection(oa,co);
+            //String[] oa = new String[&quot;a&quot;];
+            //Collection&lt;String&gt; co =new ArrayList&lt;&gt;();
+            //fromArrayToCollection(oa,co);
+
+        }
+    }
+    在使用泛型方法是不用事先传入泛型参数，编译器会自动识别。
+
+    2.与通配符的区别
+        大部分情况，通配符与泛型方法可以互换。
+        基本上，当方法中泛型形参用来表示一个或多个参数之间的类型依赖关系时使用泛型方法，其他时候可以使用通配符。
+        如这种要求类型相同时：static &lt;T&gt; void fromArrayToCollection(T[] a, Collection&lt;T&gt; c)。
+        或有继承关系：static &lt;T，&gt; void fromArrayToCollection(T[] a, Collection&lt;T&gt; c)
+
+    3.泛型构造器
+        java也允许在构造器签名上声明泛型形参。
+        这里非常容易搞混类的泛型形参和泛型构造器，应注意跟在类后面的泛型均为类的泛型参数，构造器前面的是泛型构造器。
+    示例代码：
+    class MyClass&lt;E&gt;{
+        public &lt;T&gt; MyClass(T t){
+            System.out.println(&quot;e的参数是：&quot;+t);
+        }
+    }
+    public class GenericDiamondTest {
+         public static void main(String[] args){
+             MyClass&lt;String&gt; mc1 = new MyClass&lt;&gt;(5);//该行未显式指定泛型构造器的类型，可以使用菱形语法。
+             MyClass&lt;String&gt; mc2 = new&lt;Integer&gt; MyClass&lt;String&gt;(5);//该行显式指定泛型构造器的类型，不可以使用菱形语法。
+         }
+    }
+
+五.擦除
+        为了保证老代码的运行，java允许带泛型声明的类不指定实际类型，默认该泛型形参是指定的第一个上限类型。
+        当把一个有泛型信息的对象赋给没有泛型信息的对象是，所有的类型信息都会被扔掉，即为擦除。
+
+    示例代码：
+    class Apple1&lt;T extends Number&gt;{
+        T size;
+        public Apple1(){}
+        public Apple1(T size){
+            this.size=size;
+        }
+        public void setSize(T size){
+            this.size=size;
+        }
+        public T getSize() {
+            return this.size;
+        }
+    }
+    public class ErasureTest {
+        public static void main(String[] args){
+            Apple1&lt;Integer&gt; a = new Apple1&lt;&gt;(6);
+            Integer as=a.getSize();
+            Apple1 b=a;                           //此时a的所有类型声明均被擦除，b只知道a的上限是Number。
+            Number size=b.getSize();
+            //Interger size= b.getSize();         //此时会报错
+        }
+    }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/08/%E6%B3%9B%E5%9E%8B/" data-id="ck8ve4je200053gvk0t1t54j8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/03/Map/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">java集合类（四）Map集合和Collections类相关操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/08/%E6%B3%9B%E5%9E%8B/">泛型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/28/Collection/">java集合类（一）Collection相关操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
