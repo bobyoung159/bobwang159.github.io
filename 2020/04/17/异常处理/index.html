@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>异常处理 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一.try...catch捕获异常 就把可能出异常的代码放入catch即可  二.异常类的继承关系  (1)每个catch块都是专门用于处理该异常类及子类的一场实例。     在java接收到异常对象，会依次判断该异常对象是否是catch块后异常类及子类，是就调用catch块中代码处理，不是调用下一个catch块。     所有的非正常情况分为Error和Exception。     下面列出一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异常处理">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;17&#x2F;%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一.try...catch捕获异常 就把可能出异常的代码放入catch即可  二.异常类的继承关系  (1)每个catch块都是专门用于处理该异常类及子类的一场实例。     在java接收到异常对象，会依次判断该异常对象是否是catch块后异常类及子类，是就调用catch块中代码处理，不是调用下一个catch块。     所有的非正常情况分为Error和Exception。     下面列出一些">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-18T10:01:32.477Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-异常处理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/17/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" class="article-date">
+  <time datetime="2020-04-17T01:59:39.000Z" itemprop="datePublished">2020-04-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      异常处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>一.try...catch捕获异常
+就把可能出异常的代码放入catch即可
+
+二.异常类的继承关系
+ (1)每个catch块都是专门用于处理该异常类及子类的一场实例。
+    在java接收到异常对象，会依次判断该异常对象是否是catch块后异常类及子类，是就调用catch块中代码处理，不是调用下一个catch块。
+    所有的非正常情况分为Error和Exception。
+    下面列出一些常见异常
+
+示例代码：
+    public class DivTest {
+        public static void main(String[] args){
+            try{
+                int a=Integer.parseInt(args[0]);
+                int b=Integer.parseInt(args[1]);
+                int c=a/b;
+                System.out.println(&quot;两数相除结果为：&quot;+c);
+            }catch(indexoutofboundsexception ie){
+                System.out.println(&quot;数组越界，输入参数不够&quot;);
+            }catch(NumberFormatException me){
+                System.out.println(&quot;数字格式异常：程序只能接收整数参数&quot;);
+            }catch(ArithmeticException ae){
+                System.out.println(&quot;算术异常&quot;);
+            }catch(Exception e){//先捕获小异常再捕获大异常，如果大异常先被catch，在其范围里的小异常永远无法被捕获。
+                System.out.println(&quot;未知异常&quot;);
+            }
+        }
+    }
+
+ (2)java还支持多异常捕获，不同异常用“|”分割，如catch（indexoutofboundsexception | NumberFormatException | ArithmeticException ie）。
+
+ (3)访问异常信息
+    通过异常形参可以访问异常对象的相关信息。
+    方法：
+    getMessage():返回详细描述。
+    printStackTrace:输出跟踪栈信息。
+    getStackTrace:返回跟踪栈信息。
+
+示例代码：
+    catch(IndexOutOfBoundsException ie){
+        System.out.println(ie.getMessage());
+        ie.printStackTrace();
+    }
+
+ (4)使用finally回收资源
+    因为在遇到异常后，该语句之后的所有语句不再执行，但是物理资源（如数据库连接，磁盘文件）必须显式回收，因此提供finally块，不论之前代码如何，
+ finally块中的代码总会被执行。
+    同时，异常处理可以嵌套。
+
+示例代码：
+    import java.io.FileInputStream;
+    import java.io.IOException;
+
+    public class FinallyTest {
+        public static void main(String[] args){
+            FileInputStream fis = null;
+            try{
+                fis = new FileInputStream(&quot;a.txt&quot;);
+            }catch (IOException ioe){
+                System.out.println(ioe.getMessage());
+                return ;//强制方法返回
+            }finally{//fina块必须放在catch后面
+                if(fis!=null){
+                    try {
+                        fis.close();
+                    }catch(IOException ioe){
+                        ioe.printStackTrace();
+                    }
+                }
+                System.out.println(&quot;执行资源回收&quot;);
+            }
+        }
+    }
+
+ (5)自动关闭资源的try语句
+    允许在try关键字后跟一对圆括号，在其中放入多个资源，此处资源指必须在程序结束后显示关闭的资源，try语句会自动关闭这些资源。
+
+ 示例代码：
+    import java.io.*;
+
+    public class AutoCloseTest {
+        public static void main(String[] args) throws IOException{
+            final BufferedReader br = new BufferedReader(new FileReader(&quot;AutoCloseTest.java&quot;));//要求变量为final类型
+            PrintStream ps = new PrintStream(new FileOutputStream(&quot;a.txt&quot;));//没显示使用final修饰，但只要不重新赋值，该变量就是有效的final。
+            try(br;ps){
+                System.out.println(br.readLine());
+                ps.println(&quot;咋悄无声息&quot;);
+            }
+        }
+    }
+
+ (6)使用throws抛出异常。
+    当前方法不知道如何处理该类型异常，将异常交由上一级调用者处理，如果main方法也不知道怎么处理，也可以throws,交给jvm，打印异常的跟踪栈信息,并终止程序。
+    因此，当调用带有throws的方法时，要么放入try。。。catch语句进行处理，要么放在一个有throws声明的方法中。
+    需要注意的是，子类抛出的异常不允许比父类抛出的异常多。
+
+  示例代码：
+    import java.io.FileInputStream;
+    import java.io.IOException;
+
+    public class ThrowTest {
+        public static void main(String[] args) throws Exception{
+            test();
+        }
+        public static void test() throws IOException{
+            FileInputStream fil=new FileInputStream(&quot;a.txt&quot;);
+        }
+    }
+
+ (7)使用throw抛出异常
+    当编写代码时，会遇到一些编译不报错但是与需求相违背的情况（比如下棋的地方有棋子了），这时需要程序员自己抛出异常。
+    throw语句抛出的是一个异常实例，当接收到开发者自行抛出的异常，同样会中止程序，调到对应catch块。
+
+示例代码：
+    public class ThrowEcTest {
+        public static void main(String[] args){
+            int [] a =new int[]{1,2,3};
+            try {
+                if(a[1]!=10){
+                    throw new Exception(&quot;该数组首位不是十&quot;);//抛出异常实例，而非异常类。
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println(&quot;请修改数组&quot;);
+            }
+        }
+    }
+
+ (8)自定义异常类
+    异常的类名通常包含有用的信息，通过自定义异常类明确描述异常类，用户自定义异常应继承Exceptin基类。
+    通常提供两种构造器，一个是带字符串参数的构造器，一个是无参数的构造器。
+
+示例代码：
+    public class MyexpTest extends Exception {
+        public MyexpTest(){ }
+        public MyexpTest(String msg){
+            super(msg);//通过super调用父类构造器将该参数传给异常对象的message属性。
+        }
+    }</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/17/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" data-id="ck95mtntc0003wkvk2xfsg86k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/08/%E6%B3%9B%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">泛型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/17/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">异常处理</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/08/%E6%B3%9B%E5%9E%8B/">泛型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/03/Map/">java集合类（四）Map集合和Collections类相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/List/">java集合类（三）List集合和Queue集合相关操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/01/Set/">java集合类（二）Set相关操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
